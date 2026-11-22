@@ -7,12 +7,15 @@ import com.plantcare.repository.FertilisationRepository;
 import com.plantcare.repository.PlantRepository;
 import com.plantcare.repository.WateringRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+// Demo data for local development only; production holds real plants.
 @Component
+@Profile("!prod")
 public class DataSeeder implements CommandLineRunner {
 
     private final PlantRepository plantRepository;
