@@ -12,4 +12,5 @@ public interface WateringRepository extends JpaRepository<WateringEvent, Long> {
     Page<WateringEvent> findByPlantId(Long plantId, Pageable pageable);
     Optional<WateringEvent> findTopByPlantIdOrderByWateredAtDesc(Long plantId);
     long countByWateredAtAfter(LocalDateTime since);
+    boolean existsByPlantIdAndWateredAtBetween(Long plantId, LocalDateTime from, LocalDateTime to);
 }

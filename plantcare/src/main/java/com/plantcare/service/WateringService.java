@@ -30,23 +30,29 @@ public class WateringService {
     public WateringEvent logWatering(Long plantId, WateringRequest req) {
         Plant plant = plantService.findActive(plantId);
 
-        wateringRepository.findTopByPlantIdOrderByWateredAtDesc(plantId)
-                .ifPresent(last -> {
-                    if (last.getWateredAt().isAfter(LocalDateTime.now().minusHours(24))) {
-                        throw new BusinessRuleException(
-                                "Plant was already watered within the last 24 hours. Try again later.");
-                    }
-                });
+        LocalDateTime wateredAt = EventTimes.resolve(req != null ? req.getWateredAt() : null);
+
+        // 24-hour rule: no other watering within 24 hours before or after this one.
+        // Checking both sides matters when an offline client sends an older time.
+        if (wateringRepository.existsByPlantIdAndWateredAtBetween(
+                plantId, wateredAt.minusHours(24), wateredAt.plusHours(24))) {
+            throw new BusinessRuleException(
+                    "Plant was already watered within 24 hours of this time.");
+        }
 
         WateringEvent event = new WateringEvent();
         event.setPlant(plant);
+        event.setWateredAt(wateredAt);
         event.setNotes(req != null ? req.getNotes() : null);
         event.setWateredBy(req != null ? req.getWateredBy() : null);
 
         WateringEvent saved = wateringRepository.save(event);
-        plant.setLastWateredAt(saved.getWateredAt());
-        plant.setLastWateredBy(saved.getWateredBy());
-        plantRepository.save(plant);
+        // A late-synced older watering must not replace a newer "last watered".
+        if (plant.getLastWateredAt() == null || saved.getWateredAt().isAfter(plant.getLastWateredAt())) {
+            plant.setLastWateredAt(saved.getWateredAt());
+            plant.setLastWateredBy(saved.getWateredBy());
+            plantRepository.save(plant);
+        }
         return saved;
     }
 

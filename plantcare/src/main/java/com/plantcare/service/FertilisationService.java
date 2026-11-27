@@ -9,8 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @Service
 public class FertilisationService {
 
@@ -31,9 +29,12 @@ public class FertilisationService {
         FertilisationEvent event = new FertilisationEvent();
         event.setPlant(plant);
         event.setProductUsed(req.getProductUsed());
+        event.setFertilisedAt(EventTimes.resolve(req.getFertilisedAt()));
         FertilisationEvent saved = fertilisationRepository.save(event);
-        plant.setLastFertilisedAt(LocalDateTime.now());
-        plantRepository.save(plant);
+        if (plant.getLastFertilisedAt() == null || saved.getFertilisedAt().isAfter(plant.getLastFertilisedAt())) {
+            plant.setLastFertilisedAt(saved.getFertilisedAt());
+            plantRepository.save(plant);
+        }
         return saved;
     }
 
