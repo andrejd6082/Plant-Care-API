@@ -32,7 +32,7 @@ public class WateringController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Log a watering event (enforces 24h rule)")
     public WateringEvent logWatering(@PathVariable Long id,
-                                     @RequestBody(required = false) WateringRequest req) {
+                                     @Valid @RequestBody(required = false) WateringRequest req) {
         return wateringService.logWatering(id, req);
     }
 

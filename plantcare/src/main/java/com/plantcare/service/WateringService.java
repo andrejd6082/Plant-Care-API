@@ -41,9 +41,11 @@ public class WateringService {
         WateringEvent event = new WateringEvent();
         event.setPlant(plant);
         event.setNotes(req != null ? req.getNotes() : null);
+        event.setWateredBy(req != null ? req.getWateredBy() : null);
 
         WateringEvent saved = wateringRepository.save(event);
         plant.setLastWateredAt(saved.getWateredAt());
+        plant.setLastWateredBy(saved.getWateredBy());
         plantRepository.save(plant);
         return saved;
     }

@@ -81,6 +81,7 @@ public class PlantService {
         res.setRoom(plant.getRoom());
         res.setRecommendedDaysBetweenWater(plant.getRecommendedDaysBetweenWater());
         res.setLastWateredAt(plant.getLastWateredAt());
+        res.setLastWateredBy(plant.getLastWateredBy());
         res.setLastFertilisedAt(plant.getLastFertilisedAt());
         res.setCreatedAt(plant.getCreatedAt());
         if (plant.getLastWateredAt() != null && plant.getRecommendedDaysBetweenWater() != null) {

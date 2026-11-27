@@ -10,6 +10,7 @@ public class PlantResponse {
     private String room;
     private Integer recommendedDaysBetweenWater;
     private LocalDateTime lastWateredAt;
+    private String lastWateredBy;
     private LocalDateTime lastFertilisedAt;
     private LocalDateTime createdAt;
     private boolean needsWatering;
@@ -33,6 +34,9 @@ public class PlantResponse {
 
     public LocalDateTime getLastWateredAt() { return lastWateredAt; }
     public void setLastWateredAt(LocalDateTime lastWateredAt) { this.lastWateredAt = lastWateredAt; }
+
+    public String getLastWateredBy() { return lastWateredBy; }
+    public void setLastWateredBy(String lastWateredBy) { this.lastWateredBy = lastWateredBy; }
 
     public LocalDateTime getLastFertilisedAt() { return lastFertilisedAt; }
     public void setLastFertilisedAt(LocalDateTime lastFertilisedAt) { this.lastFertilisedAt = lastFertilisedAt; }

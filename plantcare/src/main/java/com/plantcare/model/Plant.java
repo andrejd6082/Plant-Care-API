@@ -18,6 +18,7 @@ public class Plant {
     private String room;
     private Integer recommendedDaysBetweenWater;
     private LocalDateTime lastWateredAt;
+    private String lastWateredBy;
     private LocalDateTime lastFertilisedAt;
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime deletedAt;
@@ -41,6 +42,9 @@ public class Plant {
 
     public LocalDateTime getLastWateredAt() { return lastWateredAt; }
     public void setLastWateredAt(LocalDateTime lastWateredAt) { this.lastWateredAt = lastWateredAt; }
+
+    public String getLastWateredBy() { return lastWateredBy; }
+    public void setLastWateredBy(String lastWateredBy) { this.lastWateredBy = lastWateredBy; }
 
     public LocalDateTime getLastFertilisedAt() { return lastFertilisedAt; }
     public void setLastFertilisedAt(LocalDateTime lastFertilisedAt) { this.lastFertilisedAt = lastFertilisedAt; }

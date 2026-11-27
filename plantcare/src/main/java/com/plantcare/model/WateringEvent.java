@@ -19,6 +19,7 @@ public class WateringEvent {
 
     private LocalDateTime wateredAt = LocalDateTime.now();
     private String notes;
+    private String wateredBy;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -31,4 +32,7 @@ public class WateringEvent {
 
     public String getNotes() { return notes; }
     public void setNotes(String notes) { this.notes = notes; }
+
+    public String getWateredBy() { return wateredBy; }
+    public void setWateredBy(String wateredBy) { this.wateredBy = wateredBy; }
 }
