@@ -126,8 +126,12 @@ curl -X PUT http://localhost:8080/plants/1 \
 curl -X POST http://localhost:8080/plants/1/waterings \
   -H "X-API-Key: demo-key-2026" \
   -H "Content-Type: application/json" \
-  -d '{"notes": "Watered thoroughly"}'
+  -d '{"notes": "Watered thoroughly", "wateredBy": "Mom"}'
 ```
+
+`wateredBy` (who watered, max 40 characters) and `wateredAt` (when, ISO-8601 UTC such as `"2026-11-27T08:30:00Z"`) are optional; `wateredAt` defaults to now and cannot be in the future. The 24-hour rule is checked around `wateredAt`. Fertilisations accept `fertilisedAt` the same way.
+
+All times the API stores and returns are UTC.
 
 ### Delete a plant
 ```bash
